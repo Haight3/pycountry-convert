@@ -3,38 +3,6 @@
         <img src="./resources/images/logo.jfif" width="65%">
     </p>
 
-<h2 align="center">pycountry-convert-ng v2026.9.0</h2>
-<h4 align="center">A maintained next-generation fork of pycountry-convert for fast country, ISO code, and continent conversions.</h4>
-
-<p align="center">
-  <a href="#introduction">Introduction</a> &bull;
-  <a href="#why-this-fork">Why this fork?</a> &bull;
-  <a href="#quick-start">Quick Start</a> &bull;
-  <a href="#installation">Installation</a> &bull;
-  <a href="#api">API</a> &bull;
-  <a href="#development">Development</a> &bull;
-  <a href="#release--pypi">Release</a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/Haight3/pycountry-convert/actions/workflows/ci.yml">
-    <img src="https://github.com/Haight3/pycountry-convert/actions/workflows/ci.yml/badge.svg?branch=master" alt="CI">
-  </a>
-  <a href="https://github.com/Haight3/pycountry-convert/actions/workflows/validate-release-meta.yml">
-    <img src="https://github.com/Haight3/pycountry-convert/actions/workflows/validate-release-meta.yml/badge.svg?branch=master" alt="Validate Release Metadata">
-  </a>
-  <a href="https://github.com/Haight3/pycountry-convert/actions/workflows/deploy.yml">
-    <img src="https://github.com/Haight3/pycountry-convert/actions/workflows/deploy.yml/badge.svg?branch=master" alt="Deployment">
-  </a>
-  <a href="https://pypi.org/project/pycountry-convert-ng/">
-    <img src="https://img.shields.io/pypi/v/pycountry-convert-ng" alt="PyPI">
-  </a>
-  <a href="https://pypi.org/project/pycountry-convert-ng/">
-    <img src="https://img.shields.io/pypi/pyversions/pycountry-convert-ng" alt="Python versions">
-  </a>
-</p>
-</div>
-
 # Introduction
 
 `pycountry-convert-ng` is a lightweight Python package for converting between country names, ISO 3166-1 alpha-2 and alpha-3 country codes, and continents.
@@ -129,12 +97,13 @@ To install an in-development branch, replace `master` with the desired branch na
 
 The public conversion functions are:
 
-| Function | Conversion |
-| --- | --- |
-| `convert_country_alpha2_to_continent()` | ISO alpha-2 -> continent |
-| `convert_country_alpha2_to_country_name()` | ISO alpha-2 -> country name |
-| `convert_country_alpha3_to_country_alpha2()` | ISO alpha-3 -> ISO alpha-2 |
-| `convert_country_name_to_country_alpha2()` | country name -> ISO alpha-2 |
+
+| Function                                     | Conversion                  |
+| ---------------------------------------------- | ----------------------------- |
+| `convert_country_alpha2_to_continent()`      | ISO alpha-2 -> continent    |
+| `convert_country_alpha2_to_country_name()`   | ISO alpha-2 -> country name |
+| `convert_country_alpha3_to_country_alpha2()` | ISO alpha-3 -> ISO alpha-2  |
+| `convert_country_name_to_country_alpha2()`   | country name -> ISO alpha-2 |
 
 Unknown values retain the legacy behavior of the original implementation and may raise `KeyError` where applicable.
 
