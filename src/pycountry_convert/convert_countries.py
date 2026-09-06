@@ -45,14 +45,14 @@ def country_alpha2_to_country_name(
         recognized.
     """
     if country_2_code is None or len(country_2_code) != 2:
-        raise KeyError("Invalid Country Alpha-2 code: '{0}'".format(country_2_code))
+        raise KeyError(f"Invalid Country Alpha-2 code: '{country_2_code}'")
 
     from .country_mappings import map_country_alpha2_to_country_name
 
     dict_country_alpha2_to_country_name = map_country_alpha2_to_country_name(cn_name_format)
 
     if country_2_code not in dict_country_alpha2_to_country_name:
-        raise KeyError("Invalid Country Alpha-2 code: '{0}'".format(country_2_code))
+        raise KeyError(f"Invalid Country Alpha-2 code: '{country_2_code}'")
 
     return dict_country_alpha2_to_country_name[country_2_code]
 
@@ -77,14 +77,14 @@ def country_alpha3_to_country_alpha2(country_3_code: str) -> str:
         not recognized.
     """
     if country_3_code is None or len(country_3_code) != 3:
-        raise KeyError("Invalid Country Alpha-3 code: '{0}'".format(country_3_code))
+        raise KeyError(f"Invalid Country Alpha-3 code: '{country_3_code}'")
 
     from .country_mappings import map_country_alpha3_to_country_alpha2
 
     dict_country_alpha3_to_country_alpha2 = map_country_alpha3_to_country_alpha2()
 
     if country_3_code not in dict_country_alpha3_to_country_alpha2:
-        raise KeyError("Invalid Country Alpha-3 code: '{0}'".format(country_3_code))
+        raise KeyError(f"Invalid Country Alpha-3 code: '{country_3_code}'")
 
     return dict_country_alpha3_to_country_alpha2[country_3_code]
 
@@ -123,12 +123,12 @@ def country_name_to_country_alpha2(
 
     if len(cn_name) == 2:
         if cn_name not in list_country_alpha2:
-            raise KeyError("Invalid Country Alpha-2 code: '{0}'".format(cn_name))
+            raise KeyError(f"Invalid Country Alpha-2 code: '{cn_name}'")
 
         return cn_name
 
     if cn_name not in dict_country_name_to_country_alpha2:
-        raise KeyError("Invalid Country Name: '{0}'".format(cn_name))
+        raise KeyError(f"Invalid Country Name: '{cn_name}'")
 
     return dict_country_name_to_country_alpha2[cn_name]
 
@@ -157,7 +157,7 @@ def country_name_to_country_alpha3(
         If the country name or code is missing or is not recognized.
     """
     if cn_name is None:
-        raise KeyError("Invalid Country Name: '{0}'".format(cn_name))
+        raise KeyError(f"Invalid Country Name: '{cn_name}'")
 
     cn_name = country_name_format(cn_name, cn_name_format)
     dict_country_name_to_country_alpha3 = map_country_name_to_country_alpha3(cn_name_format)
@@ -167,11 +167,11 @@ def country_name_to_country_alpha3(
 
         list_country_alpha3 = list_country_alpha3()
         if cn_name not in list_country_alpha3:
-            raise KeyError("Invalid Country Alpha-3 code: '{0}'".format(cn_name))
+            raise KeyError(f"Invalid Country Alpha-3 code: '{cn_name}'")
 
         return cn_name
 
     if cn_name not in dict_country_name_to_country_alpha3:
-        raise KeyError("Invalid Country Name: '{0}'".format(cn_name))
+        raise KeyError(f"Invalid Country Name: '{cn_name}'")
 
     return dict_country_name_to_country_alpha3[cn_name]

@@ -9,15 +9,10 @@ This module builds cached mappings among country names, ISO 3166-1 codes, and
 official country names from pycountry data and supported Wikipedia aliases.
 """
 
-import sys
+from functools import lru_cache
 
 from .country_name_format import COUNTRY_NAME_FORMAT_DEFAULT, country_name_format
 from .country_wikipedia import WIKIPEDIA_COUNTRY_NAME_TO_COUNTRY_ALPHA2
-
-if (sys.version_info[0] < 3) or (sys.version_info[0] == 3 and sys.version_info[2] < 2):
-    from repoze.lru import lru_cache
-else:
-    from functools import lru_cache
 
 
 @lru_cache(maxsize=128)

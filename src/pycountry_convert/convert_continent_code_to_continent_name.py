@@ -40,9 +40,9 @@ def convert_continent_code_to_continent_name(continent_2_code: str) -> str:
         not recognized.
     """
     if continent_2_code is None or len(continent_2_code) != 2:
-        raise KeyError("Invalid Continent code: '{0}'".format(continent_2_code))
+        raise KeyError(f"Invalid Continent code: '{continent_2_code}'")
 
     if continent_2_code not in CONTINENT_CODE_TO_CONTINENT_NAME:
-        raise KeyError("Invalid Continent code: '{0}'".format(continent_2_code))
+        raise KeyError(f"Invalid Continent code: '{continent_2_code}'")
 
     return CONTINENT_CODE_TO_CONTINENT_NAME[continent_2_code]
