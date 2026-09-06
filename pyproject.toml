@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pycountry-convert-ng"
-version = "2026.9.0.0"
+version = "2026.9.0"
 description = "Fast country, ISO code, and continent conversion utilities."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -70,12 +70,14 @@ testpaths = ["tests"]
 filterwarnings = ["error"]
 
 [tool.bumpver]
-current_version = "2026.9.0.0"
-version_pattern = "YYYY.MM.INC0.PATCH"
-commit_message = "ver(pycountry-convert-ng): bump version from {old_version} -> {new_version}"
+current_version = "2026.9.0"
+version_pattern = "YYYY.MM.PATCH"
+commit_message = "ver(pycountry-convert): bump version from {old_version} -> {new_version}"
 commit = true
 tag = false
 push = true
+version_regex = "(?P<year>[0-9]{4})\\.(?P<month>[0-9]{1,2})\\.(?P<patch>[0-9]+)"
+version_replacement = "{year}.{month}.{patch}"
 
 [tool.bumpver.file_patterns]
 "pyproject.toml" = [
