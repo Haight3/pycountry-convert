@@ -2,6 +2,7 @@
 
 The original `pycountry-convert` project was written and maintained by contributors from TUNE / TuneLab, including:
 
+- Ismail Baris <ismail.baris@haight.ai>
 - Ian Molee <ian@tune.com>
 - Jeff Tanner <jefft@tune.com>
 - Ohad Lahav <ohad@tune.com>
