@@ -1,10 +1,16 @@
-# pycountry-convert
+# pycountry-convert-ng
 
-`pycountry-convert` provides fast in-memory conversion between country names, ISO 3166-1 alpha-2 / alpha-3 codes, and continent names.
+`pycountry-convert-ng` is the maintained next-generation distribution of `pycountry-convert`. It provides fast in-memory conversion between country names, ISO 3166-1 alpha-2 / alpha-3 codes, and continent names.
 
-This repository is a maintained fork of the original TuneLab project. The conversion tables and public conversion API are intentionally preserved; the surrounding packaging, testing, CI, and release infrastructure has been modernized.
+The Python import package remains `pycountry_convert`, preserving the existing public API.
 
 ## Installation
+
+From PyPI:
+
+```bash
+python -m pip install pycountry-convert-ng
+```
 
 From the repository:
 
@@ -18,8 +24,6 @@ For development:
 python -m pip install -e ".[dev]"
 pre-commit install
 ```
-
-Release wheels and source distributions are attached to GitHub Releases. This fork does not automatically publish to the public PyPI project owned by the upstream package.
 
 ## Usage
 
@@ -62,8 +66,6 @@ Unknown keys retain the legacy behavior and raise `KeyError` where applicable.
 
 ## Release flow
 
-The repository follows the same release model used by other Haight Python projects:
-
 ```text
 feature / development
         ↓
@@ -77,10 +79,14 @@ release metadata validation + CI
         ↓
 master
         ↓
-build + installation verification + GitHub Release
+build + installation verification
+        ↓
+PyPI Trusted Publishing
+        ↓
+GitHub tag + GitHub Release
 ```
 
-The package version is managed with `bumpver`. Git tags are created only after the release artifacts have been built and verified successfully.
+The package is published to PyPI as `pycountry-convert-ng` through Trusted Publishing. The import name remains `pycountry_convert`.
 
 ## License
 

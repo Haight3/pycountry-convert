@@ -106,11 +106,34 @@ jobs:
       - name: Smoke test installed package
         run: python -c "import pycountry_convert as pc; assert pc.convert_country_alpha2_to_continent('DE') == 'Europe'; assert pc.convert_country_alpha3_to_country_alpha2('DEU') == 'DE'"
 
+  publish-pypi:
+    name: Publish to PyPI
+    needs:
+      - build
+      - verify-installation
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/pycountry-convert-ng/
+
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: distributions
+          path: dist
+
+      - name: Publish distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+
   publish-release:
     name: Publish GitHub Release
     needs:
       - prepare-release
-      - verify-installation
+      - publish-pypi
     runs-on: ubuntu-latest
 
     permissions:

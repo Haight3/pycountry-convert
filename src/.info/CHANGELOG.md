@@ -6,11 +6,12 @@ All notable changes to the Haight-maintained fork are documented here.
 
 ### Changed
 
+- Renamed the maintained distribution to `pycountry-convert-ng` while preserving the `pycountry_convert` import package and public API.
 - Migrated packaging from legacy `setup.py` to PEP 517/518/621 `pyproject.toml`.
 - Migrated the package to a `src/pycountry_convert` layout.
 - Preserved the existing conversion implementation and public API.
 - Replaced Travis CI, Pylint, YAPF, and legacy requirements files with GitHub Actions, Ruff, pytest, and pre-commit.
-- Added automated versioning, release metadata validation, package builds, installation verification, and GitHub Releases.
+- Added automated versioning, release metadata validation, package builds, installation verification, PyPI Trusted Publishing, and GitHub Releases.
 - Declared the runtime package dependency-free because the conversion implementation uses static in-memory mappings.
 
 ## [0.2.2] - 2017-03-12
