@@ -5,7 +5,7 @@ on:
 
   push:
     branches:
-      - dev-sep
+      - new-arch
       - release-candidate
       - master
 
