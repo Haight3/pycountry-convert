@@ -1,0 +1,44 @@
+name: Validate Release Metadata
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  validate-release-metadata:
+    name: Validate release metadata
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Validate versions and changelog
+        shell: bash
+        run: |
+          PACKAGE_VERSION=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")
+          SOURCE_VERSION=$(python -c "import re, pathlib; text=pathlib.Path('src/pycountry_convert/__init__.py').read_text(); print(re.search(r\"^__version__ = ['\\\"]([^'\\\"]+)['\\\"]\", text, re.MULTILINE).group(1))")
+
+          echo "Package version: ${PACKAGE_VERSION}"
+          echo "Source version:  ${SOURCE_VERSION}"
+
+          if [ "${PACKAGE_VERSION}" != "${SOURCE_VERSION}" ]; then
+            echo "pyproject.toml and src/pycountry_convert/__init__.py versions differ."
+            exit 1
+          fi
+
+          if ! grep -Fq "## [${PACKAGE_VERSION}]" src/.info/CHANGELOG.md; then
+            echo "src/.info/CHANGELOG.md has no release heading for ${PACKAGE_VERSION}."
+            exit 1
+          fi

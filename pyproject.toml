@@ -1,0 +1,137 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pycountry-convert-ng"
+version = "2026.9.0"
+description = "Fast country, ISO code, and continent conversion utilities."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Haight Labs" },
+    { name = "TUNE Inc., TuneLab" },
+]
+maintainers = [
+    { name = "Haight Labs" },
+]
+keywords = ["country", "continent", "iso-3166", "geography"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/Haight3/pycountry-convert"
+Repository = "https://github.com/Haight3/pycountry-convert"
+Issues = "https://github.com/Haight3/pycountry-convert/issues"
+
+[project.optional-dependencies]
+dev = [
+    "build>=1.2",
+    "bumpver>=2023.1129",
+    "pre-commit>=4.0",
+    "pytest>=8.4",
+    "pytest-cov>=6.0",
+    "ruff>=0.14",
+    "twine>=6.1",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["pycountry_convert*"]
+
+[tool.pytest.ini_options]
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--tb=short",
+]
+testpaths = ["tests"]
+filterwarnings = ["error"]
+
+[tool.bumpver]
+current_version="2026.9.0"
+version_pattern = "YYYY.MM.PATCH"
+commit_message = "ver(pycountry-convert): bump version from {old_version} -> {new_version}"
+commit = true
+tag = false
+push = true
+version_regex = "(?P<year>[0-9]{4})\\.(?P<month>[0-9]{1,2})\\.(?P<patch>[0-9]+)"
+version_replacement = "{year}.{month}.{patch}"
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+    'version = "{version}"',
+    'current_version="{version}"',
+]
+"src/pycountry_convert/__init__.py" = [
+    '__version__ = "{version}"',
+]
+
+[tool.ruff]
+line-length = 140
+target-version = "py311"
+extend-exclude = ["resources/scripts/deploy.py"]
+preview = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ANN401",
+    "COM812",
+    "D205",
+    "D213",
+    "D400",
+    "D401",
+    "D413",
+    "D415",
+    "EM",
+    "EM101",
+    "ERA001",
+    "FBT001",
+    "FBT002",
+    "PLR0913",
+    "PTH",
+    "RET504",
+    "T201",
+    "TRY003",
+    "C901",
+    "PLR0917",
+    "PLR2004",
+    "N817",
+    "RUF067",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"resources/docs/conf.py" = ["A001", "D100", "INP001", "Q000", "UP009", "UP030", "UP031", "UP032", "I001", "COM812"]
+"resources/scripts/*.py" = ["D100", "INP001", "UP009"]
+"src/pycountry_convert/__init__.py" = ["F401"]
+"src/pycountry_convert/country_name_to_country_alpha2.py" = ["DOC502"]
+"tests/*.py" = ["ANN201", "D100", "D103", "INP001", "RUF048", "S101", "PERF102", "B007", "PLR2004", "N806", "PLC0415", "ANN202", "CPY001"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
