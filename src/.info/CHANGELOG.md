@@ -2,7 +2,7 @@
 
 All notable changes to the Haight-maintained fork are documented here.
 
-## [2026.9.0.0] - 2026-09-06
+## [2026.9.0] - 2026-09-06
 
 ### Changed
 
