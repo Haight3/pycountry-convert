@@ -55,9 +55,11 @@ Unknown keys retain the legacy behavior and raise `KeyError` where applicable.
 .
 ├── .github/
 │   └── workflows/
-├── data/
-├── examples/
+├── resources/
+│   ├── data/
+│   └── examples/
 ├── src/
+│   ├── .info/
 │   └── pycountry_convert/
 ├── tests/
 ├── pyproject.toml

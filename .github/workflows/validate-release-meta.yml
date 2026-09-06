@@ -38,7 +38,7 @@ jobs:
             exit 1
           fi
 
-          if ! grep -Fq "## [${PACKAGE_VERSION}]" CHANGELOG.md; then
-            echo "CHANGELOG.md has no release heading for ${PACKAGE_VERSION}."
+          if ! grep -Fq "## [${PACKAGE_VERSION}]" src/.info/CHANGELOG.md; then
+            echo "src/.info/CHANGELOG.md has no release heading for ${PACKAGE_VERSION}."
             exit 1
           fi

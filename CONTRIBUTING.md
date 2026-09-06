@@ -25,12 +25,11 @@ The legacy conversion implementation under `src/pycountry_convert/` is intention
 1. Develop on a feature branch.
 2. Merge into `release-candidate` after CI passes.
 3. The version workflow increments the package version on `release-candidate`.
-4. Update `CHANGELOG.md` so the release version has a matching heading.
+4. Update `src/.info/CHANGELOG.md` so the release version has a matching heading.
 5. Open a pull request from `release-candidate` to `master`.
 6. CI and release metadata validation must pass.
-7. Merging to `master` builds and validates the distributions.
-8. The built wheel is installed and smoke-tested.
-9. The verified distributions are published to PyPI as `pycountry-convert-ng` through Trusted Publishing.
-10. Only after PyPI succeeds is the Git tag and GitHub Release created.
+7. Merging to `master` builds and verifies the distribution.
+8. The verified wheel and source distribution are published to PyPI as `pycountry-convert-ng` through the `pypi` environment using Trusted Publishing.
+9. The Git tag and GitHub Release are created only after the PyPI publication succeeds.
 
-The PyPI publisher is bound to the GitHub environment `pypi`; no PyPI API token is stored in GitHub.
+No PyPI API token is stored in GitHub. The deployment uses OpenID Connect with the PyPI Trusted Publisher configured for `Haight3/pycountry-convert`, workflow `deploy.yml`, environment `pypi`.
