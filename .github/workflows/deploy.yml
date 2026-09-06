@@ -104,7 +104,7 @@ jobs:
         run: python -m pip install dist/*.whl
 
       - name: Smoke test installed package
-        run: python -c "import pycountry_convert as pc; assert pc.convert_country_alpha2_to_continent('DE') == 'Europe'; assert pc.convert_country_alpha3_to_country_alpha2('DEU') == 'DE'"
+        run: python -c "import pycountry_convert as pc; a2=pc.country_alpha3_to_country_alpha2('DEU'); c=pc.country_alpha2_to_continent_code(a2); assert a2 == 'DE'; assert pc.convert_continent_code_to_continent_name(c) == 'Europe'"
 
   publish-pypi:
     name: Publish to PyPI

@@ -6,25 +6,27 @@ All notable changes to the Haight-maintained fork are documented here.
 
 ### Changed
 
-- Renamed the maintained distribution to `pycountry-convert-ng` while preserving the `pycountry_convert` import package and public API.
-- Migrated packaging from legacy `setup.py` to PEP 517/518/621 `pyproject.toml`.
-- Migrated the package to a `src/pycountry_convert` layout.
-- Preserved the existing conversion implementation and public API.
-- Replaced Travis CI, Pylint, YAPF, and legacy requirements files with GitHub Actions, Ruff, pytest, and pre-commit.
-- Added automated versioning, release metadata validation, package builds, installation verification, PyPI Trusted Publishing, and GitHub Releases.
-- Declared the runtime package dependency-free because the conversion implementation uses static in-memory mappings.
-- Relocated data and example resources under the `resources` directory.
-- Restored and standardized `YYYY.MM.PATCH` versioning and corrected the bumpver configuration.
-- Updated the README, contributing guidance, package documentation, and release documentation.
-- Reformatted country conversion mappings and updated conversion tests.
+- Renamed the maintained distribution to `pycountry-convert-ng` while preserving the `pycountry_convert` import package.
+- Replaced the stale implementation initially inherited by the GitHub fork with the published `pycountry-convert 0.7.2` package implementation.
+- Restored the real `0.7.2` public API, including `country_alpha2_to_continent_code`, `convert_continent_code_to_continent_name`, `country_name_to_country_alpha3`, country mapping helpers, name formatting, and Wikipedia aliases.
+- Restored `pycountry` as the runtime source for ISO country data.
+- Migrated packaging from legacy `setup.py` to PEP 517/518/621 `pyproject.toml` and a `src/` layout.
+- Replaced Travis CI and legacy tooling with GitHub Actions, Ruff, pytest, and pre-commit.
+- Added automated calendar versioning, release metadata validation, package builds, installation verification, PyPI Trusted Publishing, and GitHub Releases.
+- Relocated data and examples under `resources/` and updated tests/examples for the `0.7.2` API.
+- Kept the upstream implementation excluded from automatic Ruff rewriting to preserve the compatibility baseline.
 
 ### Added
 
-- Added the new package logo asset.
+- Added the maintained project README, contribution guidance, package logo, behavioral tests, and modern release infrastructure.
+
+## [0.7.2] - upstream compatibility baseline
+
+- Published upstream implementation used as the source baseline for the NG fork.
 
 ## [0.2.2] - 2017-03-12
 
-- Version declared by the legacy package at the point used by this fork.
+- Version declared by the older GitHub source initially inherited by this fork.
 
 ## [0.1.9] - 2017-03-12
 
