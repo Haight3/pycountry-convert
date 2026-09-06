@@ -1,32 +1,41 @@
-# Project files
-*.komodoproject
-.idea/
-.metadata/
-.project
-.settings/
-.pydevproject
-.python-version
-.idea
-.dartignore
+*.py[cod]
+__pycache__/
 
-.sw*
-*.vim
-*.zip
-
-# Code build files
+# Packaging
+*.egg
 *.egg-info/
 build/
-__pycache__/
-pycountry_convert/__pycache__/
-*.pyc
+dist/
+wheelhouse/
 
+# Virtual environments
+.venv/
+venv/
+venv*/
+pyvenv*/
 
-# pytest
-.cache/*
-/htmlcov/
-/.coverage
+# Tests and coverage
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+coverage.xml
 
-# distribution
-.eggs/*
-dist/*
+# Tool caches
+.mypy_cache/
+.ruff_cache/
+.cache/
 
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local configuration
+.env
+.env.*
+!.env.example

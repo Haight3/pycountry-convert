@@ -4,7 +4,7 @@
 #  @namespace pycountry-convert
 
 __title__ = 'pycountry-convert'
-__version__ = '0.2.2'
+__version__ = '2026.9.0.0'
 __build__ = 0x000202
 __version_info__ = tuple(__version__.split('.'))
 
