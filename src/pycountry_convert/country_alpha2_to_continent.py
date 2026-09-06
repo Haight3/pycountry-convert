@@ -1,9 +1,14 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-#  @copyright 2017 TUNE, Inc. (http://www.tune.com)
-#  @namespace pycountry-convert
 """
-Mapping of Country Alpha-2 to Continent, from Wikipedia
+Country Alpha-2 to Continent Conversion
+=======================================
+
+*Created on 2026-09-06 by Haight Labs*
+*Copyright (C) 2026 Haight Labs*
+*Copyright (C) 2017 TUNE, Inc. (http://www.tune.com)*
+*For COPYING and LICENSE details, please refer to the LICENSE file*
+
+This module maps ISO 3166-1 alpha-2 country codes to their corresponding
+continents.
 """
 
 COUNTRY_ALPHA2_TO_CONTINENT = {
@@ -255,8 +260,24 @@ COUNTRY_ALPHA2_TO_CONTINENT = {
 }
 
 
-def convert_country_alpha2_to_continent(country_2_code):
-    """Convert country code to continent."""
+def convert_country_alpha2_to_continent(country_2_code: str) -> str:
+    """Convert an ISO 3166-1 alpha-2 country code to a continent.
+
+    Parameters
+    ----------
+    country_2_code : str
+        Two-letter country code.
+
+    Returns
+    -------
+    str
+        Continent associated with the country code.
+
+    Raises
+    ------
+    KeyError
+        If the country code is not present in the mapping.
+    """
     if country_2_code not in COUNTRY_ALPHA2_TO_CONTINENT:
         raise KeyError
 

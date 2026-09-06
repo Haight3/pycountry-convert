@@ -1,8 +1,14 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-#  @namespace pycountry-convert
 """
-Country Alpha-3 code mapping to Country Alpha-2 code mapping.
+Country Alpha-3 to Alpha-2 Conversion
+====================================
+
+*Created on 2026-09-06 by Haight Labs*
+*Copyright (C) 2026 Haight Labs*
+*Copyright (C) 2017 TUNE, Inc. (http://www.tune.com)*
+*For COPYING and LICENSE details, please refer to the LICENSE file*
+
+This module maps ISO 3166-1 alpha-3 country codes to their corresponding
+alpha-2 country codes.
 """
 
 COUNTRY_ALPHA3_TO_COUNTRY_ALPHA2 = {
@@ -250,8 +256,24 @@ COUNTRY_ALPHA3_TO_COUNTRY_ALPHA2 = {
 }
 
 
-def convert_country_alpha3_to_country_alpha2(country_3_code):
-    """Convert country code to country name."""
+def convert_country_alpha3_to_country_alpha2(country_3_code: str) -> str:
+    """Convert an ISO 3166-1 alpha-3 country code to an alpha-2 code.
+
+    Parameters
+    ----------
+    country_3_code : str
+        Three-letter country code.
+
+    Returns
+    -------
+    str
+        Two-letter country code associated with the input.
+
+    Raises
+    ------
+    KeyError
+        If the country code is not present in the mapping.
+    """
     if country_3_code not in COUNTRY_ALPHA3_TO_COUNTRY_ALPHA2:
         raise KeyError
 
