@@ -11,7 +11,7 @@ This package provides conversions between country names and ISO 3166-1
 alpha-2 and alpha-3 country codes.
 """
 
-__version__ = "2026.9.0.0"
+__version__ = "2026.9.0"
 
 from .country_alpha2_to_continent import convert_country_alpha2_to_continent
 from .country_alpha2_to_country_name import convert_country_alpha2_to_country_name
