@@ -5,19 +5,18 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pycountry-convert-ng"
 version = "2026.9.0"
-description = "Fast country, ISO code, and continent conversion utilities."
+description = "Country, ISO code, and continent conversion utilities maintained from pycountry-convert 0.7.2."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [
-    { name = "Haight Labs" },
     { name = "TUNE Inc., TuneLab" },
 ]
 maintainers = [
     { name = "Haight Labs" },
 ]
-keywords = ["country", "continent", "iso-3166", "geography"]
+keywords = ["country", "continent", "iso-3166", "geography", "pycountry"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -32,7 +31,9 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-dependencies = []
+dependencies = [
+    "pycountry>=24.6.1",
+]
 
 [project.urls]
 Homepage = "https://github.com/Haight3/pycountry-convert"
@@ -85,13 +86,13 @@ version_replacement = "{year}.{month}.{patch}"
     'current_version="{version}"',
 ]
 "src/pycountry_convert/__init__.py" = [
-    '__version__ = "{version}"',
+    "__version__ = '{version}'",
 ]
 
 [tool.ruff]
 line-length = 140
 target-version = "py311"
-extend-exclude = ["resources/scripts/deploy.py"]
+extend-exclude = ["resources/scripts/deploy.py", "src/pycountry_convert"]
 preview = true
 
 [tool.ruff.format]
@@ -129,8 +130,6 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 "resources/docs/conf.py" = ["A001", "D100", "INP001", "Q000", "UP009", "UP030", "UP031", "UP032", "I001", "COM812"]
 "resources/scripts/*.py" = ["D100", "INP001", "UP009"]
-"src/pycountry_convert/__init__.py" = ["F401"]
-"src/pycountry_convert/country_name_to_country_alpha2.py" = ["DOC502"]
 "tests/*.py" = ["ANN201", "D100", "D103", "INP001", "RUF048", "S101", "PERF102", "B007", "PLR2004", "N806", "PLC0415", "ANN202", "CPY001"]
 
 [tool.ruff.lint.pydocstyle]

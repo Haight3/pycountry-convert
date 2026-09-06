@@ -12,5 +12,6 @@ repos:
     rev: v0.14.0
     hooks:
       - id: ruff-check
+        exclude: ^src/pycountry_convert/
       - id: ruff-format
         exclude: ^src/pycountry_convert/
