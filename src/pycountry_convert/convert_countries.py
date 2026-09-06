@@ -1,24 +1,48 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-#  @copyright 2018 TUNE, Inc. (http://www.tune.com)
-#  @namespace pycountry-convert
+"""
+Country Code Conversion
+=======================
+*Created on 2026-09-06 by Isbert*
+*Copyright (C) 2018 TUNE, Inc. (http://www.tune.com)*
+*For COPYING and LICENSE details, please refer to the LICENSE file*
 
-from .country_name_format import (
-    COUNTRY_NAME_FORMAT_DEFAULT,
-)
+This module provides public conversions among country names and ISO 3166-1
+alpha-2 and alpha-3 country codes.
+"""
 
 from .country_mappings import (
+    list_country_alpha2,
     map_country_name_to_country_alpha2,
     map_country_name_to_country_alpha3,
-    list_country_alpha2,
 )
-
 from .country_name_format import (
-    country_name_format
+    COUNTRY_NAME_FORMAT_DEFAULT,
+    country_name_format,
 )
 
-def country_alpha2_to_country_name(country_2_code, cn_name_format=COUNTRY_NAME_FORMAT_DEFAULT):
-    """Convert country ISO 3166-1 Alpha-2 code to country name.
+
+def country_alpha2_to_country_name(
+    country_2_code: str,
+    cn_name_format: str = COUNTRY_NAME_FORMAT_DEFAULT,
+) -> str:
+    """Convert an ISO 3166-1 alpha-2 code to a country name.
+
+    Parameters
+    ----------
+    country_2_code : str
+        Two-letter country code to convert.
+    cn_name_format : str, default="default"
+        Letter-case format to apply to the returned country name.
+
+    Returns
+    -------
+    str
+        The country name in the requested format.
+
+    Raises
+    ------
+    KeyError
+        If the country code is missing, is not two characters long, or is not
+        recognized.
     """
     if country_2_code is None or len(country_2_code) != 2:
         raise KeyError("Invalid Country Alpha-2 code: '{0}'".format(country_2_code))
@@ -33,8 +57,24 @@ def country_alpha2_to_country_name(country_2_code, cn_name_format=COUNTRY_NAME_F
     return dict_country_alpha2_to_country_name[country_2_code]
 
 
-def country_alpha3_to_country_alpha2(country_3_code):
-    """Convert country ISO 3166-1 Alpha-3 code to country ISO 3166-1 Alpha-2.
+def country_alpha3_to_country_alpha2(country_3_code: str) -> str:
+    """Convert an ISO 3166-1 alpha-3 code to an alpha-2 code.
+
+    Parameters
+    ----------
+    country_3_code : str
+        Three-letter country code to convert.
+
+    Returns
+    -------
+    str
+        The corresponding two-letter country code.
+
+    Raises
+    ------
+    KeyError
+        If the country code is missing, is not three characters long, or is
+        not recognized.
     """
     if country_3_code is None or len(country_3_code) != 3:
         raise KeyError("Invalid Country Alpha-3 code: '{0}'".format(country_3_code))
@@ -49,8 +89,28 @@ def country_alpha3_to_country_alpha2(country_3_code):
     return dict_country_alpha3_to_country_alpha2[country_3_code]
 
 
-def country_name_to_country_alpha2(cn_name, cn_name_format=COUNTRY_NAME_FORMAT_DEFAULT):
-    """Convert country name to country code ISO 3166-1 Alpha-2.
+def country_name_to_country_alpha2(
+    cn_name: str,
+    cn_name_format: str = COUNTRY_NAME_FORMAT_DEFAULT,
+) -> str:
+    """Convert a country name or code to an ISO 3166-1 alpha-2 code.
+
+    Parameters
+    ----------
+    cn_name : str
+        Country name, alpha-2 code, or alpha-3 code to resolve.
+    cn_name_format : str, default="default"
+        Letter-case format used when matching country names.
+
+    Returns
+    -------
+    str
+        The corresponding two-letter country code.
+
+    Raises
+    ------
+    KeyError
+        If the country name or code is missing or is not recognized.
     """
     if cn_name is None:
         raise KeyError("Invalid Country Name: '{0}'".format(cn_name))
@@ -73,8 +133,28 @@ def country_name_to_country_alpha2(cn_name, cn_name_format=COUNTRY_NAME_FORMAT_D
     return dict_country_name_to_country_alpha2[cn_name]
 
 
-def country_name_to_country_alpha3(cn_name, cn_name_format=COUNTRY_NAME_FORMAT_DEFAULT):
-    """Convert country name to country code.
+def country_name_to_country_alpha3(
+    cn_name: str,
+    cn_name_format: str = COUNTRY_NAME_FORMAT_DEFAULT,
+) -> str:
+    """Convert a country name or code to an ISO 3166-1 alpha-3 code.
+
+    Parameters
+    ----------
+    cn_name : str
+        Country name or alpha-3 code to resolve.
+    cn_name_format : str, default="default"
+        Letter-case format used when matching country names.
+
+    Returns
+    -------
+    str
+        The corresponding three-letter country code.
+
+    Raises
+    ------
+    KeyError
+        If the country name or code is missing or is not recognized.
     """
     if cn_name is None:
         raise KeyError("Invalid Country Name: '{0}'".format(cn_name))
