@@ -13,6 +13,14 @@ All notable changes to the Haight-maintained fork are documented here.
 - Replaced Travis CI, Pylint, YAPF, and legacy requirements files with GitHub Actions, Ruff, pytest, and pre-commit.
 - Added automated versioning, release metadata validation, package builds, installation verification, PyPI Trusted Publishing, and GitHub Releases.
 - Declared the runtime package dependency-free because the conversion implementation uses static in-memory mappings.
+- Relocated data and example resources under the `resources` directory.
+- Restored and standardized `YYYY.MM.PATCH` versioning and corrected the bumpver configuration.
+- Updated the README, contributing guidance, package documentation, and release documentation.
+- Reformatted country conversion mappings and updated conversion tests.
+
+### Added
+
+- Added the new package logo asset.
 
 ## [0.2.2] - 2017-03-12
 
