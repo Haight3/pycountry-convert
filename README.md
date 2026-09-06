@@ -1,7 +1,38 @@
 <div align="center">
     <p>
-        <img src="./resources/images/logo.jfif" width="65%">
+        <img src="https://raw.githubusercontent.com/Haight3/pycountry-convert/master/resources/images/logo.jpg" width="75%" alt="pycountry-convert-ng logo">
     </p>
+
+<h2 align="center">pycountry-convert-ng v2026.9.0</h2>
+<h4 align="center">Fast country, ISO code, and continent conversion utilities.</h4>
+
+<p align="center">
+  <a href="#introduction">Introduction</a> &bull;
+  <a href="#why-this-fork">Why This Fork?</a> &bull;
+  <a href="#quick-start">Quick Start</a> &bull;
+  <a href="#installation">Installation</a> &bull;
+  <a href="#api">API</a> &bull;
+  <a href="#development">Development</a>
+</p>
+
+<p align="center">
+  <a href="https://pypi.org/project/pycountry-convert-ng/">
+    <img src="https://img.shields.io/pypi/v/pycountry-convert-ng.svg" alt="PyPI">
+  </a>
+  <a href="https://github.com/Haight3/pycountry-convert/actions/workflows/ci.yml">
+    <img src="https://github.com/Haight3/pycountry-convert/actions/workflows/ci.yml/badge.svg" alt="CI">
+  </a>
+  <a href="https://github.com/Haight3/pycountry-convert/actions/workflows/validate-release-meta.yml">
+    <img src="https://github.com/Haight3/pycountry-convert/actions/workflows/validate-release-meta.yml/badge.svg" alt="Validate Release Metadata">
+  </a>
+  <a href="https://github.com/Haight3/pycountry-convert/actions/workflows/deploy.yml">
+    <img src="https://github.com/Haight3/pycountry-convert/actions/workflows/deploy.yml/badge.svg" alt="Deployment">
+  </a>
+  <a href="https://github.com/Haight3/pycountry-convert/actions/workflows/version-inc.yml">
+    <img src="https://github.com/Haight3/pycountry-convert/actions/workflows/version-inc.yml/badge.svg" alt="Version Increment">
+  </a>
+</p>
+</div>
 
 # Introduction
 
@@ -97,9 +128,8 @@ To install an in-development branch, replace `master` with the desired branch na
 
 The public conversion functions are:
 
-
-| Function                                     | Conversion                  |
-| ---------------------------------------------- | ----------------------------- |
+| Function                                    | Conversion                 |
+| ------------------------------------------- | -------------------------- |
 | `convert_country_alpha2_to_continent()`      | ISO alpha-2 -> continent    |
 | `convert_country_alpha2_to_country_name()`   | ISO alpha-2 -> country name |
 | `convert_country_alpha3_to_country_alpha2()` | ISO alpha-3 -> ISO alpha-2  |
