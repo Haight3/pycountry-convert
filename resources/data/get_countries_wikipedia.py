@@ -192,7 +192,7 @@ def convert_country_name_to_continent(country_name):
             dic[line["Country"]] = line["Continent"]
 
     if country_name not in dic:
-        raise KeyError()
+        raise KeyError
 
     return dic[country_name]
 
@@ -207,7 +207,7 @@ def convert_country_name_to_code(country_name):
             dic[line["Country"]] = line["Iso2c"]
 
     if country_name not in dic:
-        raise KeyError()
+        raise KeyError
 
     return dic[country_name]
 
@@ -246,7 +246,7 @@ def get_country_name_to_alpha2_from_wiki(country_name):
             dic[line["English short name lower case"]] = line["Alpha-2 code"]
 
     if country_name not in dic:
-        raise KeyError()
+        raise KeyError
 
     return dic[country_name]
 
@@ -261,7 +261,7 @@ def get_country_name_to_alpha3_from_wiki(country_name):
             dic[line["English short name lower case"]] = line["Alpha-3 code"]
 
     if country_name not in dic:
-        raise KeyError()
+        raise KeyError
 
     return dic[country_name]
 
