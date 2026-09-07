@@ -256,6 +256,11 @@ COUNTRY_ALPHA2_TO_CONTINENT_CODE = {
     "ZA": "AF",
     "ZM": "AF",
     "ZW": "AF",
+    "PN": "OC",
+    "WH": "AF",
+    "EH": "AF",
+    "TL": "AS",
+    "TF": "AN",
 }
 
 

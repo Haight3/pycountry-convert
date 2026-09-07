@@ -2,7 +2,14 @@
 
 All notable changes to the Haight-maintained fork are documented here.
 
-## [2026.9.1] - 2026-09-07
+
+## [2026.9.3] - 2026-09-07
+
+### Added
+
+- Added new countries to continent conversion.
+
+## [2026.9.2] - 2026-09-07
 
 ### Added
 
