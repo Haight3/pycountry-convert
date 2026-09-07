@@ -22,6 +22,44 @@ All notable changes to the Haight-maintained fork are documented here.
 
 - Added the new package logo asset.
 
+## [0.7.2] - 2018-02-16
+
+- Python 2.7 supported.
+- Travis CI testing both Python 2.7 and 3.6.
+
+## [0.7.1] - 2018-02-15
+
+- Migrated to GitHub/TuneLab.
+- Added Python 2.7 support.
+- Added `lru_cache()`.
+
+## [0.6.7] - 2018-02-15
+
+- Added `common_name` from pycountry (vgavro).
+
+## [0.6.6] - 2018-01-25
+
+- Migrated to GitHub/tuneinc.
+- Changed the license to MIT.
+
+## [0.6.2] - 2017-12-09
+
+- Added readthedocs.org.
+
+## [0.5.4] - 2017-12-07
+
+- Changed the license to LGPL 3.0.
+
+## [0.5.0] - 2017-11-30
+
+- Added README.rst.
+- Added hits and contributors.
+
+## [0.3.0] - 2017-11-27
+
+- Added README.rst.
+- Added Travis CI.
+
 ## [0.2.2] - 2017-03-12
 
 - Version declared by the legacy package at the point used by this fork.
@@ -30,11 +68,16 @@ All notable changes to the Haight-maintained fork are documented here.
 
 - Makefile and README.rst.
 
-## [0.1.8] - 2017-03-12
+## [0.1.8] - 2016-11-19
 
+- Makefile and README.rst.
+
+## [0.1.0] - 2016-11-17
+
+- Initial code.
+- Code pulled from TuneLab/tune-mv-integration-python.
 - Country name to Country Alpha-2 code cleanup.
 
 ## [0.0.1] - 2016-11-17
 
-- Initial conception.
-- Code pulled from TuneLab/tune-mv-integration-python.
+- Initial commit.
