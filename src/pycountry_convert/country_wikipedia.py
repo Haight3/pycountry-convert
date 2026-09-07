@@ -281,6 +281,8 @@ WIKIPEDIA_COUNTRY_NAME_TO_COUNTRY_ALPHA2 = {
     "Zambia": "ZM",
     "Zimbabwe": "ZW",
     "Åland Islands": "AX",
+    "Pitcairn": "PN",
+    "Western Sahara": "EH",
 }
 
 WIKIPEDIA_COUNTRY_NAME_TO_COUNTRY_ALPHA2_NOT_ISO = {
