@@ -21,7 +21,7 @@ from .country_wikipedia import WIKIPEDIA_COUNTRY_NAME_TO_COUNTRY_ALPHA2
 @lru_cache(maxsize=128)
 def map_countries(
     cn_name_format: str = COUNTRY_NAME_FORMAT_DEFAULT,
-    cn_extra: dict[str, str] = {},
+    cn_extra: dict[str, str] | None = None,
 ) -> dict[str, dict[str, str]]:
     """Build a mapping of country names to ISO 3166-1 identifiers.
 
@@ -29,7 +29,7 @@ def map_countries(
     ----------
     cn_name_format : str, default="default"
         Letter-case format to apply to country-name keys.
-    cn_extra : dict[str, str], optional
+    cn_extra : dict[str, str] or None, optional
         Additional country-name aliases mapped to alpha-2 country codes.
 
     Returns
@@ -63,8 +63,8 @@ def map_countries(
 
     # Wikipedia Country Names
     dict_country_alpha2_to_country_name = map_country_alpha2_to_country_name(cn_name_format)
-    for cn_name_wiki, cn_alpha2 in WIKIPEDIA_COUNTRY_NAME_TO_COUNTRY_ALPHA2.items():
-        cn_name_wiki = country_name_format(cn_name_wiki, cn_name_format)
+    for raw_cn_name_wiki, cn_alpha2 in WIKIPEDIA_COUNTRY_NAME_TO_COUNTRY_ALPHA2.items():
+        cn_name_wiki = country_name_format(raw_cn_name_wiki, cn_name_format)
 
         if cn_name_wiki in dict_countries:
             # pprint(f"Skip: {cn_name_wiki}: {cn_alpha2}")
@@ -83,8 +83,8 @@ def map_countries(
         dict_countries.update({cn_name_wiki: dict_countries[cn_name]})
 
     # Extra Country Names
-    for cn_name_extra, cn_alpha2 in cn_extra.items():
-        cn_name_extra = country_name_format(cn_name_extra, cn_name_format)
+    for raw_cn_name_extra, cn_alpha2 in (cn_extra or {}).items():
+        cn_name_extra = country_name_format(raw_cn_name_extra, cn_name_format)
 
         if cn_name_extra in dict_countries:
             continue
@@ -137,7 +137,7 @@ def map_country_name_to_country_alpha3(cn_name_format: str = COUNTRY_NAME_FORMAT
 
 
 @lru_cache(maxsize=128)
-def map_country_alpha2_to_country_name(format: str = COUNTRY_NAME_FORMAT_DEFAULT) -> dict[str, str]:
+def map_country_alpha2_to_country_name(format: str = COUNTRY_NAME_FORMAT_DEFAULT) -> dict[str, str]:  # ruff: ignore[builtin-argument-shadowing]
     """Map ISO 3166-1 alpha-2 codes to country names.
 
     Parameters
@@ -154,7 +154,7 @@ def map_country_alpha2_to_country_name(format: str = COUNTRY_NAME_FORMAT_DEFAULT
 
 
 @lru_cache(maxsize=128)
-def get_country_alpha2_to_country_official_name(format: str = COUNTRY_NAME_FORMAT_DEFAULT) -> dict[str, str]:
+def get_country_alpha2_to_country_official_name(format: str = COUNTRY_NAME_FORMAT_DEFAULT) -> dict[str, str]:  # ruff: ignore[builtin-argument-shadowing]
     """Map ISO 3166-1 alpha-2 codes to official country names.
 
     Parameters
@@ -171,7 +171,7 @@ def get_country_alpha2_to_country_official_name(format: str = COUNTRY_NAME_FORMA
 
 
 @lru_cache(maxsize=128)
-def map_country_alpha3_to_country_name(format: str = COUNTRY_NAME_FORMAT_DEFAULT) -> dict[str, str]:
+def map_country_alpha3_to_country_name(format: str = COUNTRY_NAME_FORMAT_DEFAULT) -> dict[str, str]:  # ruff: ignore[builtin-argument-shadowing]
     """Map ISO 3166-1 alpha-3 codes to country names.
 
     Parameters
@@ -188,7 +188,7 @@ def map_country_alpha3_to_country_name(format: str = COUNTRY_NAME_FORMAT_DEFAULT
 
 
 @lru_cache(maxsize=128)
-def get_country_alpha3_to_country_official_name(format: str = COUNTRY_NAME_FORMAT_DEFAULT) -> dict[str, str]:
+def get_country_alpha3_to_country_official_name(format: str = COUNTRY_NAME_FORMAT_DEFAULT) -> dict[str, str]:  # ruff: ignore[builtin-argument-shadowing]
     """Map ISO 3166-1 alpha-3 codes to official country names.
 
     Parameters
