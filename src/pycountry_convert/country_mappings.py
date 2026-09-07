@@ -2,6 +2,7 @@
 Country Mapping Builders
 ========================
 *Created on 2026-09-06 by Isbert*
+*Copyright (C) 2026 Haight Labs (https://www.haight.ai)*
 *Copyright (C) 2018 TUNE, Inc. (http://www.tune.com)*
 *For COPYING and LICENSE details, please refer to the LICENSE file*
 
@@ -10,6 +11,8 @@ official country names from pycountry data and supported Wikipedia aliases.
 """
 
 from functools import lru_cache
+
+import pycountry
 
 from .country_name_format import COUNTRY_NAME_FORMAT_DEFAULT, country_name_format
 from .country_wikipedia import WIKIPEDIA_COUNTRY_NAME_TO_COUNTRY_ALPHA2
@@ -44,13 +47,9 @@ def map_countries(
     -----
     Results are cached, so explicitly supplied arguments must be hashable.
     """
-    from pycountry import countries
-
-    from .convert_countries import country_alpha2_to_country_name
-
     dict_countries = {}
 
-    for cn in countries:
+    for cn in pycountry.countries:
         cn_name = country_name_format(cn.name, cn_name_format)
         dict_countries.update({cn_name: {"alpha_2": cn.alpha_2, "alpha_3": cn.alpha_3, "numeric": cn.numeric}})
 
@@ -63,6 +62,7 @@ def map_countries(
             dict_countries.update({cn_name: {"alpha_2": cn.alpha_2, "alpha_3": cn.alpha_3, "numeric": cn.numeric}})
 
     # Wikipedia Country Names
+    dict_country_alpha2_to_country_name = map_country_alpha2_to_country_name(cn_name_format)
     for cn_name_wiki, cn_alpha2 in WIKIPEDIA_COUNTRY_NAME_TO_COUNTRY_ALPHA2.items():
         cn_name_wiki = country_name_format(cn_name_wiki, cn_name_format)
 
@@ -71,13 +71,13 @@ def map_countries(
             continue
 
         try:
-            cn_name = country_alpha2_to_country_name(cn_alpha2, cn_name_format)
+            cn_name = dict_country_alpha2_to_country_name[cn_alpha2]
         except KeyError:
             # pprint(f"Miss: {cn_name_wiki}: {cn_alpha2}")
             continue
 
         if cn_name not in dict_countries:
-            raise KeyError("Invalid Country Name: '{0}'".format(cn_name))
+            raise KeyError(f"Invalid Country Name: '{cn_name}'")
 
         # pprint(f"Add: {cn_name_wiki}: {cn_alpha2}")
         dict_countries.update({cn_name_wiki: dict_countries[cn_name]})
@@ -89,13 +89,13 @@ def map_countries(
         if cn_name_extra in dict_countries:
             continue
 
-        try:
-            cn_name = country_alpha2_to_country_name(cn_alpha2, cn_name_format)
-        except KeyError:
-            raise
+        if cn_alpha2 not in dict_country_alpha2_to_country_name:
+            raise KeyError(f"Invalid Country Alpha-2 code: '{cn_alpha2}'")
+
+        cn_name = dict_country_alpha2_to_country_name[cn_alpha2]
 
         if cn_name not in dict_countries:
-            raise KeyError("Invalid Country Name: '{0}'".format(cn_name))
+            raise KeyError(f"Invalid Country Name: '{cn_name}'")
 
         dict_countries.update({cn_name_extra: dict_countries[cn_name]})
 
@@ -150,8 +150,6 @@ def map_country_alpha2_to_country_name(format: str = COUNTRY_NAME_FORMAT_DEFAULT
     dict[str, str]
         Two-letter country codes mapped to country names.
     """
-    import pycountry
-
     return {x.alpha_2: country_name_format(x.name, format) for x in pycountry.countries}
 
 
@@ -169,8 +167,6 @@ def get_country_alpha2_to_country_official_name(format: str = COUNTRY_NAME_FORMA
     dict[str, str]
         Two-letter country codes mapped to official country names.
     """
-    import pycountry
-
     return {x.alpha_2: country_name_format(x.official_name, format) for x in pycountry.countries}
 
 
@@ -188,8 +184,6 @@ def map_country_alpha3_to_country_name(format: str = COUNTRY_NAME_FORMAT_DEFAULT
     dict[str, str]
         Three-letter country codes mapped to country names.
     """
-    import pycountry
-
     return {x.alpha_3: country_name_format(x.name, format) for x in pycountry.countries}
 
 
@@ -207,8 +201,6 @@ def get_country_alpha3_to_country_official_name(format: str = COUNTRY_NAME_FORMA
     dict[str, str]
         Three-letter country codes mapped to official country names.
     """
-    import pycountry
-
     return {x.alpha_3: country_name_format(x.official_name, format) for x in pycountry.countries}
 
 
@@ -221,8 +213,6 @@ def map_country_alpha3_to_country_alpha2() -> dict[str, str]:
     dict[str, str]
         Three-letter country codes mapped to two-letter country codes.
     """
-    import pycountry
-
     return {x.alpha_3: x.alpha_2 for x in pycountry.countries}
 
 
@@ -235,8 +225,6 @@ def map_country_alpha2_to_country_alpha3() -> dict[str, str]:
     dict[str, str]
         Two-letter country codes mapped to three-letter country codes.
     """
-    import pycountry
-
     return {x.alpha_2: x.alpha_3 for x in pycountry.countries}
 
 
@@ -249,8 +237,6 @@ def list_country_alpha2() -> list[str]:
     list[str]
         Two-letter country codes provided by pycountry.
     """
-    import pycountry
-
     return [x.alpha_2 for x in pycountry.countries]
 
 
@@ -263,6 +249,4 @@ def list_country_alpha3() -> list[str]:
     list[str]
         Three-letter country codes provided by pycountry.
     """
-    import pycountry
-
     return [x.alpha_3 for x in pycountry.countries]
