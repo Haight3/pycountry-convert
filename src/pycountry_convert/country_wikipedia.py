@@ -2,6 +2,7 @@
 Wikipedia Country Aliases
 =========================
 *Created on 2026-09-06 by Isbert*
+*Copyright (C) 2026 Haight Labs (https://www.haight.ai)*
 *Copyright (C) 2018 TUNE, Inc. (http://www.tune.com)*
 *For COPYING and LICENSE details, please refer to the LICENSE file*
 
