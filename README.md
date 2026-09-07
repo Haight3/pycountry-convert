@@ -1,6 +1,6 @@
 <div align="center">
     <p>
-        <img src="https://raw.githubusercontent.com/Haight3/pycountry-convert/master/resources/images/logo.jpg" width="75%" alt="pycountry-convert-ng logo">
+        <img src="https://raw.githubusercontent.com/Haight3/pycountry-convert/c0f0635efd4336a75bdd98e0b1fca9040c271cc6/resources/images/logo.jpg" width="75%" alt="pycountry-convert-ng logo">
     </p>
 
 <h2 align="center">PyCountry Convert Next Generation v2026.9.0</h2>
