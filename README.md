@@ -3,7 +3,7 @@
         <img src="https://raw.githubusercontent.com/Haight3/pycountry-convert/master/resources/images/logo.jpg" width="75%" alt="pycountry-convert-ng logo">
     </p>
 
-<h2 align="center">pycountry-convert-ng v2026.9.0</h2>
+<h2 align="center">PyCountry Convert Next Generation v2026.9.0</h2>
 <h4 align="center">Fast country, ISO code, and continent conversion utilities.</h4>
 
 <p align="center">
@@ -38,7 +38,7 @@
 
 `pycountry-convert-ng` is a lightweight Python package for converting between country names, ISO 3166-1 alpha-2 and alpha-3 country codes, and continents.
 
-It is a maintained fork of the original [`jefftune/pycountry-convert`](https://github.com/jefftune/pycountry-convert) project. The package keeps the familiar Python import name and public conversion API:
+It is a maintained continuation of the original `pycountry-convert` project. The package keeps the familiar Python import name and public conversion API:
 
 ```python
 import pycountry_convert as pc
@@ -56,7 +56,9 @@ The goal is deliberately small: keep the original package fast and useful, while
 
 The original `pycountry-convert` package is compact and efficient, and it provides a particularly useful capability that is surprisingly inconvenient to find in many alternatives: mapping ISO country codes to continents without requiring a large geospatial dependency stack.
 
-However, the upstream repository has seen no pushes since April 2023 and still reflects an older Python packaging and CI ecosystem. This fork exists to keep that functionality usable in modern projects without unnecessarily rewriting the core conversion logic.
+This repository was initially forked from [`jefftune/pycountry-convert`](https://github.com/jefftune/pycountry-convert), but that repository contains older code and does not match the `pycountry-convert` package published on [PyPI](https://pypi.org/project/pycountry-convert/). PyPI identifies `TuneLab/pycountry-convert` as the repository for its `0.7.2` source code, but that repository is no longer available and currently returns a 404.
+
+To recover the actual published code, the `0.7.2` source distribution was downloaded from PyPI and used to update this package. That published source now serves as the baseline for this maintained fork, with modern packaging, testing, Python support, CI, and release infrastructure added around it.
 
 `pycountry-convert-ng` therefore focuses on:
 
@@ -75,28 +77,36 @@ The distribution name was changed to `pycountry-convert-ng` so that the maintain
 ```python
 import pycountry_convert as pc
 
-# ISO alpha-2 -> continent
-pc.convert_country_alpha2_to_continent("DE")
+# ISO alpha-2 -> continent code
+continent_code = pc.country_alpha2_to_continent_code("DE")
+# "EU"
+
+# Continent code -> continent name
+pc.convert_continent_code_to_continent_name(continent_code)
 # "Europe"
 
 # ISO alpha-2 -> country name
-pc.convert_country_alpha2_to_country_name("DE")
+pc.country_alpha2_to_country_name("DE")
 # "Germany"
 
 # ISO alpha-3 -> ISO alpha-2
-pc.convert_country_alpha3_to_country_alpha2("DEU")
+pc.country_alpha3_to_country_alpha2("DEU")
 # "DE"
 
-# Country name -> ISO alpha-2
-pc.convert_country_name_to_country_alpha2("Germany")
+# Country name -> ISO alpha-2 and alpha-3
+pc.country_name_to_country_alpha2("Germany")
 # "DE"
+
+pc.country_name_to_country_alpha3("Germany")
+# "DEU"
 ```
 
 For an alpha-3 code, continent lookup can be composed directly from the public API:
 
 ```python
-alpha2 = pc.convert_country_alpha3_to_country_alpha2("DEU")
-continent = pc.convert_country_alpha2_to_continent(alpha2)
+alpha2 = pc.country_alpha3_to_country_alpha2("DEU")
+continent_code = pc.country_alpha2_to_continent_code(alpha2)
+continent = pc.convert_continent_code_to_continent_name(continent_code)
 
 print(continent)
 # Europe
@@ -128,8 +138,9 @@ To install an in-development branch, replace `master` with the desired branch na
 
 The public conversion functions are:
 
-| Function                                    | Conversion                 |
-| ------------------------------------------- | -------------------------- |
+
+| Function                                     | Conversion                  |
+| ---------------------------------------------- | ----------------------------- |
 | `convert_country_alpha2_to_continent()`      | ISO alpha-2 -> continent    |
 | `convert_country_alpha2_to_country_name()`   | ISO alpha-2 -> country name |
 | `convert_country_alpha3_to_country_alpha2()` | ISO alpha-3 -> ISO alpha-2  |
