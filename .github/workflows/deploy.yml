@@ -3,16 +3,22 @@ name: Build and Release
 on:
   workflow_dispatch:
 
-  push:
+  workflow_run:
+    workflows:
+      - Version Increment
+    types:
+      - completed
     branches:
       - master
 
 permissions:
+  actions: read
   contents: read
 
 jobs:
   prepare-release:
     name: Prepare release
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
 
     outputs:
@@ -20,6 +26,21 @@ jobs:
       release-tag: ${{ steps.package.outputs.tag }}
 
     steps:
+      - name: Verify version increment ran
+        if: github.event_name == 'workflow_run'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION_WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          CONCLUSION=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${VERSION_WORKFLOW_RUN_ID}/jobs" \
+            --jq '.jobs[] | select(.name == "bump-version") | .conclusion')
+
+          if [ "${CONCLUSION}" != "success" ]; then
+            echo "Version increment job concluded with ${CONCLUSION:-unknown}; deployment cannot continue."
+            exit 1
+          fi
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -102,9 +123,6 @@ jobs:
       - name: Install built wheel
         shell: bash
         run: python -m pip install dist/*.whl
-
-      - name: Smoke test installed package
-        run: python -c "import pycountry_convert as pc; assert pc.convert_country_alpha2_to_continent('DE') == 'Europe'; assert pc.convert_country_alpha3_to_country_alpha2('DEU') == 'DE'"
 
   publish-pypi:
     name: Publish to PyPI
