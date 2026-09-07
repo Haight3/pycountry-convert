@@ -24,6 +24,10 @@ All notable changes to the Haight-maintained fork are documented here.
 - Replaced the standalone Python example with a comprehensive Jupyter notebook tutorial.
 - Updated the README to document the published 0.7.2 baseline, revised public API, installation instructions, supported Python versions, and release workflows.
 - Converted the package logo from JFIF to JPEG and changed the README to use a commit-pinned logo URL.
+- Raised the minimum Ruff development dependency to 0.16.1 and migrated the lint configuration from rule codes to descriptive rule names.
+- Updated the Wikipedia data-maintenance scripts to use an explicit package import and direct `KeyError` raises for missing-country lookups.
+- Updated country-mapping internals to keep raw and formatted alias names distinct while preserving the existing `format=` keyword API.
+- Changed the optional `map_countries()` alias mapping default from a mutable dictionary to `None` while preserving omitted-argument behavior.
 
 ### Deprecated
 
