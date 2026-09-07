@@ -3,7 +3,11 @@ name: Version Increment
 on:
   workflow_dispatch:
 
-  push:
+  workflow_run:
+    workflows:
+      - Validate Release Metadata
+    types:
+      - completed
     branches:
       - master
 
@@ -12,7 +16,14 @@ permissions:
 
 jobs:
   bump-version:
-    if: github.actor != 'github-actions[bot]'
+    if: >
+      (github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success') &&
+      github.actor != 'github-actions[bot]' &&
+      !contains(
+        github.event.workflow_run.head_commit.message || github.event.head_commit.message,
+        '[skip version-inc]'
+      )
     runs-on: ubuntu-latest
 
     steps:
