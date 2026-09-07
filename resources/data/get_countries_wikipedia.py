@@ -1,12 +1,10 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #  @namespace pycountry-convert
 """
 Extract a list of countries, grouped by continent, from Wikipedia
 """
 
-import doctest
 import csv
+import doctest
 
 try:
     import urllib.request as urllib2
@@ -14,28 +12,20 @@ except ImportError:
     import urllib2
 import re
 
-from pprintpp import pprint
 import pycountry
+from pprintpp import pprint
 
 
 def download_wiki_country_list():
-    """Downloads the Wikipedia country list in wikitext format.
-    """
-    url = (
-        "http://en.wikipedia.org/wiki/"
-        "List_of_sovereign_states_and_dependent_"
-        "territories_by_continent?action=raw"
-    )
+    """Downloads the Wikipedia country list in wikitext format."""
+    url = "http://en.wikipedia.org/wiki/List_of_sovereign_states_and_dependent_territories_by_continent?action=raw"
     wikitext = urllib2.urlopen(url).read().decode("utf-8")
     return wikitext.split("\n")
 
 
 def open_wiki_country_list():
-    """Open Wikipedia country list
-    """
-    with open(
-        "sovereign_states_and_dependent_territories_by_continent.txt"
-    ) as wikipedia_cntry_list:
+    """Open Wikipedia country list"""
+    with open("sovereign_states_and_dependent_territories_by_continent.txt") as wikipedia_cntry_list:
         wikitext = wikipedia_cntry_list.read()
         return wikitext.split("\n")
 
@@ -51,25 +41,16 @@ def split_list_at_indices(the_list, indices):
 
 def extract_continents(wikitext_lines):
     """Given a wikitext-format line list,
-        extracts the lines that belong to a continent
-        for each continent.
+    extracts the lines that belong to a continent
+    for each continent.
     """
     continent_regex = re.compile(r"===([\s|\w]+)===")
-    #Generate list of (lines index, continent) tuples
-    continents = [
-        (idx, continent_regex.match(line).group(1))
-            for idx, line in enumerate(wikitext_lines)
-                if continent_regex.match(line)
-    ]
+    # Generate list of (lines index, continent) tuples
+    continents = [(idx, continent_regex.match(line).group(1)) for idx, line in enumerate(wikitext_lines) if continent_regex.match(line)]
 
-    continent_lines = split_list_at_indices(
-        wikitext_lines,
-        [continent[0] for continent in continents]
-    )[1:]
+    continent_lines = split_list_at_indices(wikitext_lines, [continent[0] for continent in continents])[1:]
 
-    return {
-        continents[i][1]: continent_lines[i] for i in range(len(continents))
-    }
+    return {continents[i][1]: continent_lines[i] for i in range(len(continents))}
 
 
 COUNTRY_REGEX = re.compile(r"\| '+\[?\[?([^\]]+)\]?\]?\'+")
@@ -93,30 +74,27 @@ def find_country(line):
 
 
 def extract_countries(lines_by_continent):
-    """Extract countries.
-    """
+    """Extract countries."""
     return {
         continent: [find_country(line) for line in continent_lines if find_country(line)]
-            for continent, continent_lines in lines_by_continent.items()
+        for continent, continent_lines in lines_by_continent.items()
     }
 
 
 def get_continents_to_countries_from_wiki():
-    """Get Continents and Countries from Wikipedia.
-    """
+    """Get Continents and Countries from Wikipedia."""
     lines = open_wiki_country_list()
     lines_by_continent = extract_continents(lines)
     return extract_countries(lines_by_continent)
 
 
 def get_alpha2_to_continents_from_wiki():
-    """Get Country Codes to Continents from Wikipedia.
-    """
+    """Get Country Codes to Continents from Wikipedia."""
     data = {}
     for continent, countries in get_continents_to_countries_from_wiki().items():
         for country_name in countries:
             pprint(pycountry.countries.get(name=country_name).alpha_2)
-            
+
             try:
                 country_code = pycountry.countries.get(name=country_name).alpha_2
                 data[country_code] = continent
@@ -135,8 +113,7 @@ def get_alpha2_to_continents_from_wiki():
 
 
 def get_alpha2_codes_to_countries_from_wiki():
-    """Get Country Codes to Countries from Wikipedia.
-    """
+    """Get Country Codes to Countries from Wikipedia."""
     data = {}
     for continent, countries in get_continents_to_countries_from_wiki().items():
         for country_name in countries:
@@ -156,9 +133,9 @@ def get_alpha2_codes_to_countries_from_wiki():
 
     return data
 
+
 def get_countries_to_alpha2_codes_from_wiki():
-    """Get Countries to Country Alpha-2 from Wikipedia.
-    """
+    """Get Countries to Country Alpha-2 from Wikipedia."""
     data = {}
     for continent, countries in get_continents_to_countries_from_wiki().items():
         for country_name in countries:
@@ -182,8 +159,7 @@ def get_countries_to_alpha2_codes_from_wiki():
 
 
 def get_alpha3_codes_to_alpha2_codes_from_wiki():
-    """Get Countries to Country Codes from Wikipedia.
-    """
+    """Get Countries to Country Codes from Wikipedia."""
     data = {}
     for continent, countries in get_continents_to_countries_from_wiki().items():
         for country_name in countries:
@@ -206,57 +182,51 @@ def get_alpha3_codes_to_alpha2_codes_from_wiki():
     return data
 
 
-
 def convert_country_name_to_continent(country_name):
-    """Convert country name to continent.
-    """
+    """Convert country name to continent."""
     dic = {}
 
     with open("Continents_to_CountryNames.csv") as continents_file_csv:
-        continents_file_csv_content = csv.DictReader(continents_file_csv, delimiter=',')
+        continents_file_csv_content = csv.DictReader(continents_file_csv, delimiter=",")
         for line in continents_file_csv_content:
-            dic[line['Country']] = line['Continent']
+            dic[line["Country"]] = line["Continent"]
 
     if country_name not in dic:
-        raise KeyError()
+        raise KeyError
 
     return dic[country_name]
 
 
 def convert_country_name_to_code(country_name):
-    """Convert country name to country code.
-    """
+    """Convert country name to country code."""
     dic = {}
 
     with open("CountryCodes_to_CountryNames.csv") as countries_file_csv:
-        countries_file_csv_content = \
-            csv.DictReader(countries_file_csv, delimiter=',')
+        countries_file_csv_content = csv.DictReader(countries_file_csv, delimiter=",")
         for line in countries_file_csv_content:
-            dic[line['Country']] = line['Iso2c']
+            dic[line["Country"]] = line["Iso2c"]
 
     if country_name not in dic:
-        raise KeyError()
+        raise KeyError
 
     return dic[country_name]
 
 
 def get_country_codes_to_continents():
-    """Get listing of country codes to continents.
-    """
+    """Get listing of country codes to continents."""
     dic_cntry_continent = {}
     dic_cntry_iso2c = {}
     dic_iso2c_continent = {}
 
     with open("Continents_to_CountryNames.csv") as continents_file_csv:
-        continents_file_csv_content = \
-            csv.DictReader(continents_file_csv, delimiter=',')
+        continents_file_csv_content = csv.DictReader(continents_file_csv, delimiter=",")
         for line in continents_file_csv_content:
-            dic_cntry_continent[line['Country']] = line['Continent']
+            dic_cntry_continent[line["Country"]] = line["Continent"]
 
     with open("CountryCodes_to_CountryNames.csv") as countries_file_csv:
-        countries_file_csv_content = csv.DictReader(countries_file_csv, delimiter=',')
+        countries_file_csv_content = csv.DictReader(countries_file_csv, delimiter=",")
         for line in countries_file_csv_content:
-            dic_cntry_iso2c[line['Country']] = line['Iso2c']
+            dic_cntry_iso2c[line["Country"]] = line["Iso2c"]
 
     for country_name, continent in dic_cntry_continent.items():
         if country_name in dic_cntry_iso2c:
@@ -267,39 +237,36 @@ def get_country_codes_to_continents():
 
 
 def get_country_name_to_alpha2_from_wiki(country_name):
-    """Get listing of Country names and code from Wikipedia.
-    """
+    """Get listing of Country names and code from Wikipedia."""
     dic = {}
 
     with open("wikipedia-countries-iso-3166-1.csv") as wikipedia_iso_csv:
-        wikipedia_iso_csv_content = csv.DictReader(wikipedia_iso_csv, delimiter=',')
+        wikipedia_iso_csv_content = csv.DictReader(wikipedia_iso_csv, delimiter=",")
         for line in wikipedia_iso_csv_content:
-            dic[line['English short name lower case']] = line['Alpha-2 code']
+            dic[line["English short name lower case"]] = line["Alpha-2 code"]
 
     if country_name not in dic:
-        raise KeyError()
+        raise KeyError
 
     return dic[country_name]
 
 
 def get_country_name_to_alpha3_from_wiki(country_name):
-    """Get listing of Country names and code from Wikipedia.
-    """
+    """Get listing of Country names and code from Wikipedia."""
     dic = {}
 
     with open("wikipedia-countries-iso-3166-1.csv") as wikipedia_iso_csv:
-        wikipedia_iso_csv_content = csv.DictReader(wikipedia_iso_csv, delimiter=',')
+        wikipedia_iso_csv_content = csv.DictReader(wikipedia_iso_csv, delimiter=",")
         for line in wikipedia_iso_csv_content:
-            dic[line['English short name lower case']] = line['Alpha-3 code']
+            dic[line["English short name lower case"]] = line["Alpha-3 code"]
 
     if country_name not in dic:
-        raise KeyError()
+        raise KeyError
 
     return dic[country_name]
-
 
 
 if __name__ == "__main__":
     doctest.testmod()
     pprint(get_continents_to_countries_from_wiki())
-    #pprint(get_countries_to_alpha2_codes_from_wiki())
+    # pprint(get_countries_to_alpha2_codes_from_wiki())

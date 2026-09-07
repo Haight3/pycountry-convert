@@ -1,20 +1,16 @@
 """
-Country Name to Alpha-2 Conversion
-==================================
-
-*Created on 2026-09-06 by Haight Labs*
-*Copyright (C) 2026 Haight Labs*
-*Copyright (C) 2017 TUNE, Inc. (http://www.tune.com)*
+Wikipedia Country Aliases
+=========================
+*Created on 2026-09-06 by ibaris*
+*Copyright (C) 2026 Haight Labs (https://www.haight.ai)*
+*Copyright (C) 2018 TUNE, Inc. (http://www.tune.com)*
 *For COPYING and LICENSE details, please refer to the LICENSE file*
 
-This module maps country names and supported alpha-3 country codes to ISO
-3166-1 alpha-2 country codes.
+This module provides mappings from country names used by Wikipedia to ISO
+3166-1 alpha-2 codes, including selected non-ISO territorial aliases.
 """
 
-from pycountry_convert.country_alpha3_to_country_alpha2 import convert_country_alpha3_to_country_alpha2
-
-COUNTRY_NAME_TO_COUNTRY_ALPHA2 = {
-    "Abkhazia": "AB",
+WIKIPEDIA_COUNTRY_NAME_TO_COUNTRY_ALPHA2 = {
     "Afghanistan": "AF",
     "Albania": "AL",
     "Algeria": "DZ",
@@ -82,7 +78,7 @@ COUNTRY_NAME_TO_COUNTRY_ALPHA2 = {
     "Djibouti": "DJ",
     "Dominica": "DM",
     "Dominican Republic": "DO",
-    "East Timor": "TP",
+    "East Timor": "TL",  # https://www.iso.org/obp/ui/#iso:code:3166:TP
     "Ecuador": "EC",
     "Egypt": "EG",
     "El Salvador": "SV",
@@ -139,7 +135,6 @@ COUNTRY_NAME_TO_COUNTRY_ALPHA2 = {
     "Korea, Democratic People's Republic of": "KP",
     "Kiribati": "KI",
     "Korea, Republic Of": "KR",
-    "Kosovo": "XK",
     "Kuwait": "KW",
     "Kyrgyzstan": "KG",
     "Laos": "LA",
@@ -241,7 +236,6 @@ COUNTRY_NAME_TO_COUNTRY_ALPHA2 = {
     "South Africa": "ZA",
     "South Georgia and the South Sandwich Islands": "GS",
     "South Korea": "KR",
-    "South Ossetia": "OS",
     "South Sudan": "SS",
     "Spain": "ES",
     "Sri Lanka": "LK",
@@ -289,26 +283,8 @@ COUNTRY_NAME_TO_COUNTRY_ALPHA2 = {
     "Åland Islands": "AX",
 }
 
-
-def convert_country_name_to_country_alpha2(country_name: str) -> str:
-    """Convert a country name or alpha-3 code to an alpha-2 country code.
-
-    Parameters
-    ----------
-    country_name : str
-        Country name or supported three-letter country code.
-
-    Returns
-    -------
-    str
-        Two-letter country code associated with the input.
-
-    Raises
-    ------
-    KeyError
-        If the country name or alpha-3 code is not present in the mappings.
-    """
-    if country_name not in COUNTRY_NAME_TO_COUNTRY_ALPHA2:
-        return convert_country_alpha3_to_country_alpha2(country_name)
-
-    return COUNTRY_NAME_TO_COUNTRY_ALPHA2[country_name]
+WIKIPEDIA_COUNTRY_NAME_TO_COUNTRY_ALPHA2_NOT_ISO = {
+    "Abkhazia": "AB",
+    "Kosovo": "XK",
+    "South Ossetia": "OS",
+}

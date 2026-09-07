@@ -7,97 +7,136 @@ import pytest
 import pycountry_convert as pc
 
 
+def test_package_version() -> None:
+    """Expose the maintained release version."""
+    assert pc.__version__ == "2026.9.0"
+
+
 @pytest.mark.parametrize(
-    ("alpha2", "expected_continent"),
+    ("alpha2", "expected_code"),
     [
-        ("DE", "Europe"),
-        ("JP", "Asia"),
-        ("ZA", "Africa"),
-        ("US", "North America"),
-        ("BR", "South America"),
-        ("AU", "Oceania"),
-        ("BV", "Antarctica"),
+        ("DE", "EU"),
+        ("JP", "AS"),
+        ("ZA", "AF"),
+        ("US", "NA"),
+        ("BR", "SA"),
+        ("AU", "OC"),
+        ("BV", "AN"),
     ],
 )
-def test_alpha2_to_continent(alpha2: str, expected_continent: str) -> None:
+def test_alpha2_to_continent_code(alpha2: str, expected_code: str) -> None:
     """Convert representative alpha-2 codes from every continent."""
-    assert pc.convert_country_alpha2_to_continent(alpha2) == expected_continent
+    assert pc.country_alpha2_to_continent_code(alpha2) == expected_code
 
 
 @pytest.mark.parametrize(
-    ("alpha3", "expected_alpha2"),
+    ("code", "expected_name"),
     [
-        ("DEU", "DE"),
-        ("JPN", "JP"),
-        ("USA", "US"),
-        ("ZAF", "ZA"),
+        ("EU", "Europe"),
+        ("AS", "Asia"),
+        ("AF", "Africa"),
+        ("NA", "North America"),
+        ("SA", "South America"),
+        ("OC", "Oceania"),
+        ("AN", "Antarctica"),
     ],
 )
-def test_alpha3_to_alpha2(alpha3: str, expected_alpha2: str) -> None:
-    """Convert representative alpha-3 codes to alpha-2."""
-    assert pc.convert_country_alpha3_to_country_alpha2(alpha3) == expected_alpha2
+def test_continent_code_to_name(code: str, expected_name: str) -> None:
+    """Convert every supported continent code to its display name."""
+    assert pc.convert_continent_code_to_continent_name(code) == expected_name
 
 
-def test_alpha3_to_continent_chain() -> None:
-    """Resolve a continent from an alpha-3 code through the public API."""
-    alpha2 = pc.convert_country_alpha3_to_country_alpha2("DEU")
-    assert pc.convert_country_alpha2_to_continent(alpha2) == "Europe"
+def test_alpha3_to_continent_name_chain() -> None:
+    """Resolve a continent name from an alpha-3 code through the public API."""
+    alpha2 = pc.country_alpha3_to_country_alpha2("DEU")
+    continent_code = pc.country_alpha2_to_continent_code(alpha2)
+
+    assert pc.convert_continent_code_to_continent_name(continent_code) == "Europe"
+
+
+def test_country_conversions() -> None:
+    """Exercise each public country conversion path."""
+    assert pc.country_alpha2_to_country_name("DE") == "Germany"
+    assert pc.country_alpha3_to_country_alpha2("DEU") == "DE"
+    assert pc.country_name_to_country_alpha2("Germany") == "DE"
+    assert pc.country_name_to_country_alpha3("Germany") == "DEU"
+
+
+def test_country_name_converter_accepts_country_codes() -> None:
+    """Resolve alpha-2 and alpha-3 inputs through the country-name entrypoint."""
+    assert pc.country_name_to_country_alpha2("DE") == "DE"
+    assert pc.country_name_to_country_alpha2("DEU") == "DE"
 
 
 @pytest.mark.parametrize(
-    ("alpha2", "expected_country_name"),
+    ("name", "expected_alpha2"),
     [
-        ("DE", "Germany"),
-        ("US", "United States of America"),
-        ("CI", "Ivory Coast"),
-        ("XK", "Kosovo"),
-    ],
-)
-def test_alpha2_to_country_name(alpha2: str, expected_country_name: str) -> None:
-    """Convert representative alpha-2 codes to country names."""
-    assert pc.convert_country_alpha2_to_country_name(alpha2) == expected_country_name
-
-
-@pytest.mark.parametrize(
-    ("country_name", "expected_alpha2"),
-    [
-        ("Germany", "DE"),
-        ("United States", "US"),
         ("Great Britain", "GB"),
+        ("South Korea", "KR"),
+        ("Ivory Coast", "CI"),
         ("Republic of the Congo", "CG"),
     ],
 )
-def test_country_name_to_alpha2(country_name: str, expected_alpha2: str) -> None:
-    """Convert canonical country names and supported aliases to alpha-2."""
-    assert pc.convert_country_name_to_country_alpha2(country_name) == expected_alpha2
+def test_wikipedia_country_aliases(name: str, expected_alpha2: str) -> None:
+    """Resolve supported Wikipedia aliases to alpha-2 codes."""
+    assert pc.country_name_to_country_alpha2(name) == expected_alpha2
 
 
-def test_country_name_converter_accepts_alpha3_fallback() -> None:
-    """Resolve an alpha-3 code through the country-name entrypoint."""
-    assert pc.convert_country_name_to_country_alpha2("DEU") == "DE"
+def test_country_name_formats() -> None:
+    """Apply the supported lower- and upper-case country-name formats."""
+    assert pc.country_alpha2_to_country_name("DE", pc.COUNTRY_NAME_FORMAT_UPPER) == "GERMANY"
+    assert pc.country_alpha2_to_country_name("DE", pc.COUNTRY_NAME_FORMAT_LOWER) == "germany"
+    assert pc.country_name_to_country_alpha2("GERMANY", pc.COUNTRY_NAME_FORMAT_UPPER) == "DE"
+    assert pc.country_name_to_country_alpha2("germany", pc.COUNTRY_NAME_FORMAT_LOWER) == "DE"
+
+
+def test_mapping_api() -> None:
+    """Build the public mappings and country-code lists from real pycountry data."""
+    assert pc.map_country_alpha3_to_country_alpha2()["DEU"] == "DE"
+    assert pc.map_country_alpha2_to_country_alpha3()["DE"] == "DEU"
+    assert pc.map_country_alpha2_to_country_name()["DE"] == "Germany"
+    assert pc.map_country_name_to_country_alpha2()["Germany"] == "DE"
 
 
 @pytest.mark.parametrize(
     "conversion",
     [
-        pc.convert_country_alpha2_to_continent,
-        pc.convert_country_alpha2_to_country_name,
+        pc.country_alpha2_to_country_name,
+        pc.country_alpha2_to_continent_code,
     ],
 )
-def test_unknown_alpha2_raises_key_error(conversion: Callable[[str], str]) -> None:
-    """Reject an unknown alpha-2 code across alpha-2 entrypoints."""
+@pytest.mark.parametrize("invalid_alpha2", [None, "", "D", "ZZ"])
+def test_invalid_alpha2_raises_key_error(
+    conversion: Callable[[str | None], str],
+    invalid_alpha2: str | None,
+) -> None:
+    """Reject invalid alpha-2 values across public alpha-2 entrypoints."""
     with pytest.raises(KeyError):
-        conversion("ZZ")
+        conversion(invalid_alpha2)
+
+
+@pytest.mark.parametrize("invalid_code", [None, "", "E", "XX"])
+def test_invalid_continent_code_raises_key_error(invalid_code: str | None) -> None:
+    """Reject missing, malformed, and unknown continent codes."""
+    with pytest.raises(KeyError):
+        pc.convert_continent_code_to_continent_name(invalid_code)
 
 
 @pytest.mark.parametrize(
-    ("conversion", "unknown_value"),
+    ("conversion", "invalid_value"),
     [
-        (pc.convert_country_alpha3_to_country_alpha2, "ZZZ"),
-        (pc.convert_country_name_to_country_alpha2, "Atlantis"),
+        (pc.country_alpha3_to_country_alpha2, None),
+        (pc.country_alpha3_to_country_alpha2, "ZZZ"),
+        (pc.country_name_to_country_alpha2, None),
+        (pc.country_name_to_country_alpha2, "Atlantis"),
+        (pc.country_name_to_country_alpha3, None),
+        (pc.country_name_to_country_alpha3, "Atlantis"),
     ],
 )
-def test_unknown_country_identifier_raises_key_error(conversion: Callable[[str], str], unknown_value: str) -> None:
+def test_invalid_country_identifier_raises_key_error(
+    conversion: Callable[[str | None], str],
+    invalid_value: str | None,
+) -> None:
     """Reject unknown alpha-3 codes and country names."""
     with pytest.raises(KeyError):
-        conversion(unknown_value)
+        conversion(invalid_value)
