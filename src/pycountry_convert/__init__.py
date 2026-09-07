@@ -10,7 +10,7 @@ This package exposes country, ISO code, and continent conversion helpers along
 with the mapping and country-name formatting utilities used by those helpers.
 """
 
-__version__ = "2026.9.2"
+__version__ = "2026.9.3"
 
 
 from .convert_continent_code_to_continent_name import convert_continent_code_to_continent_name
