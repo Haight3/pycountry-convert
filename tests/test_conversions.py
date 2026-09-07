@@ -7,11 +7,6 @@ import pytest
 import pycountry_convert as pc
 
 
-def test_package_version() -> None:
-    """Expose the maintained release version."""
-    assert pc.__version__ == "2026.9.0"
-
-
 @pytest.mark.parametrize(
     ("alpha2", "expected_code"),
     [

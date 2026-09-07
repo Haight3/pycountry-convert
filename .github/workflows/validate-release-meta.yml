@@ -3,6 +3,14 @@ name: Validate Release Metadata
 on:
   workflow_dispatch:
 
+  workflow_run:
+    workflows:
+      - CI
+    types:
+      - completed
+    branches:
+      - master
+
   pull_request:
     branches:
       - master
@@ -16,8 +24,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Verify CI succeeded
+        if: github.event_name == 'workflow_run'
+        shell: bash
+        env:
+          CI_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+        run: |
+          if [ "${CI_CONCLUSION}" != "success" ]; then
+            echo "CI concluded with ${CI_CONCLUSION}; release metadata validation cannot continue."
+            exit 1
+          fi
+
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
